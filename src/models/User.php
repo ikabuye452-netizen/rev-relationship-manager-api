@@ -18,4 +18,14 @@ class User {
             return [];
         }
     }
+
+    public function getUserById($id) : array {
+        if ($this->conn) {
+            $query = "SELECT * FROM user WHERE id=" . $id;
+            $stmt = $this->conn->query($query);
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } else {
+            return [];
+        }
+    }
 }

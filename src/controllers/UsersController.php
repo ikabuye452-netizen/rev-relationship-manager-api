@@ -15,4 +15,11 @@ class UsersController {
         header('Content-Type: application/json');
         echo json_encode($result);
     }
+
+    public function getUserById($id) {
+        $result = $this->user->getUserById($id);
+
+        header('Content-Type: application/json');
+        echo json_encode($result);
+    }
 }

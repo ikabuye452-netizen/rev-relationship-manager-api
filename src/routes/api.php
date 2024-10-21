@@ -11,6 +11,9 @@ if ($requestUri == "/" && $requestMethod == "GET") {
     echo "You are in the root page!";
 } elseif ($requestUri == "/users" && $requestMethod == "GET") {
     $usersController->getAllUser();
+} elseif (preg_match('#^/users/(\d+)$#', $requestUri, $matches) && $requestMethod == "GET") {
+    $userId = $matches[1];
+    $usersController->getUserById($userId);
 } else {
     http_response_code(404);
     echo "Error 404! No route found!";
