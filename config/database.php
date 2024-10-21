@@ -11,7 +11,7 @@ class Database {
     private $DB_USER;
     private $DB_PASS;
     private $DB_NAME;
-    public $conn = null;
+    public $conn;
 
     public function __construct() {
         $this->DB_HOST = $_ENV['DB_HOST'];
@@ -20,12 +20,17 @@ class Database {
         $this->DB_NAME = $_ENV['DB_NAME'];
     }
 
-    public function connect() {
+    public function connect(): ?PDO {
+        $this->conn = null;
+
         try {
-            $dsn = "mysql:host" . $this->DB_HOST . ";db_name" . $this->DB_NAME . ";charset=utf8";
-            $pdo = new PDO($dsn, $this->DB_USER, $this->DB_PASS);
+            $dsn = "mysql:host=" . $this->DB_HOST . ";dbname=" . $this->DB_NAME . ";charset=utf8";
+            $this->conn = new PDO($dsn, $this->DB_USER, $this->DB_PASS);
+            $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         } catch (PDOException $e) {
             echo "Connection failed: " . $e->getMessage();
         }
+
+        return $this->conn;
     }
 }
