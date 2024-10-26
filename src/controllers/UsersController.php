@@ -25,11 +25,19 @@ class UsersController {
     public function getUserById($id) {
         $result = $this->user->getUserById($id);
 
-        http_response_code(200);
         header('Content-Type: application/json');
+        
+        if (empty($result)) {
+            http_response_code(404);
+            $message = "user not found";
+        } else {
+            http_response_code(200);
+            $message = "successfully get user data from database";
+        }
+
         $response = [
             "status"=>"success",
-            "message"=> "successfully get user data from database",
+            "message"=> $message,
             "data"=> $result
         ];
         echo json_encode($response);
