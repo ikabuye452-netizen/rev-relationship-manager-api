@@ -12,14 +12,26 @@ class UsersController {
     public function getAllUser() {
         $result = $this->user->getAllUser();
 
+        http_response_code(200);
         header('Content-Type: application/json');
-        echo json_encode($result);
+        $response = [
+            "status"=>"success",
+            "message"=> "successfully get all user data from database",
+            "data"=> $result
+        ];
+        echo json_encode($response);
     }
 
     public function getUserById($id) {
         $result = $this->user->getUserById($id);
 
+        http_response_code(200);
         header('Content-Type: application/json');
-        echo json_encode($result);
+        $response = [
+            "status"=>"success",
+            "message"=> "successfully get user data from database",
+            "data"=> $result
+        ];
+        echo json_encode($response);
     }
 }
