@@ -11,13 +11,13 @@ $requestMethod = $_SERVER['REQUEST_METHOD'];
 if ($requestUri == "/") {
     switch ($requestMethod) {
         case "GET":
-            echo "You are in the root page!";
+            echo "You are in the root!";
             break;
         default:
             sendResponse405() ;
             break;
     }
-} elseif ($requestUri == "/users") {
+} elseif ($requestUri == "/api/users") {
     switch ($requestMethod) {
         case "GET":
             $usersController->getAllUser();
@@ -26,7 +26,7 @@ if ($requestUri == "/") {
             sendResponse405();
             break;
     }
-} elseif (preg_match('#^/users/(\d+)$#', $requestUri, $matches)) {
+} elseif (preg_match('#^/api/users/(\d+)$#', $requestUri, $matches)) {
     $userId = $matches[1];
     switch ($requestMethod) {
         case "GET":
