@@ -67,7 +67,7 @@ class UsersController {
             }
 
             header('Content-Type: application/json');
-            http_response_code(empty($result) ? 404 : 200);
+            http_response_code(empty($result) ? 400 : 201);
             echo json_encode([
                 "status"=>"success",
                 "message"=> $message,
