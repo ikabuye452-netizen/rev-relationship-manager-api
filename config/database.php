@@ -24,11 +24,11 @@ class Database {
         $this->conn = null;
 
         try {
-            $dsn = "mysql:host=" . $this->DB_HOST . ";dbname=" . $this->DB_NAME . ";charset=utf8";
+            $dsn = "mysql:host={$this->DB_HOST};dbname={$this->DB_NAME};charset=utf8";
             $this->conn = new PDO($dsn, $this->DB_USER, $this->DB_PASS);
             $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         } catch (PDOException $e) {
-            echo "Connection failed: " . $e->getMessage();
+            error_log("[" . date("Y-m-d H:i:s") . "] Connection failed: " . $e->getMessage() . "\r\n", 3, '../logs/error.log');
         }
 
         return $this->conn;
