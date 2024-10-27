@@ -80,4 +80,55 @@ class User {
             error_log("Query failed: " . $e->getMessage(), 3, '../../logs/error.log');
         }
     }
+
+    public function editUserName($id, $newName) : void {
+        try {
+            $query = "UPDATE user SET name = ? WHERE id = ?";
+
+            if ($this->conn === null) {
+                throw new Exception("Database connection is null.");
+            }
+
+            $stmt = $this->conn->prepare($query);
+            $stmt->bindParam(1, $newName, PDO::PARAM_STR);
+            $stmt->bindParam(2, $id, PDO::PARAM_INT);
+            $stmt->execute();
+        } catch (PDOException $e) {
+            error_log("Query failed: " . $e->getMessage(), 3, '../../logs/error.log');
+        }
+    }
+
+    public function editUserAge($id, $newAge) : void {
+        try {
+            $query = "UPDATE user SET age = ? WHERE id = ?";
+
+            if ($this->conn === null) {
+                throw new Exception("Database connection is null.");
+            }
+
+            $stmt = $this->conn->prepare($query);
+            $stmt->bindParam(1, $newAge, PDO::PARAM_STR);
+            $stmt->bindParam(2, $id, PDO::PARAM_INT);
+            $stmt->execute();
+        } catch (PDOException $e) {
+            error_log("Query failed: " . $e->getMessage(), 3, '../../logs/error.log');
+        }
+    }
+
+    public function editUserJob($id, $newJob) : void {
+        try {
+            $query = "UPDATE user SET job = ? WHERE id = ?";
+
+            if ($this->conn === null) {
+                throw new Exception("Database connection is null.");
+            }
+
+            $stmt = $this->conn->prepare($query);
+            $stmt->bindParam(1, $newJob, PDO::PARAM_STR);
+            $stmt->bindParam(2, $id, PDO::PARAM_INT);
+            $stmt->execute();
+        } catch (PDOException $e) {
+            error_log("Query failed: " . $e->getMessage(), 3, '../../logs/error.log');
+        }
+    }
 }

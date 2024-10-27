@@ -14,7 +14,7 @@ if ($requestUri == "/") {
             echo "You are in the root!";
             break;
         default:
-            sendResponse405() ;
+            sendResponse405();
             break;
     }
 } elseif ($requestUri == "/api/users") {
@@ -35,6 +35,9 @@ if ($requestUri == "/") {
         case "GET":
             $usersController->getUserById($userId);
             break;
+        case "PATCH":
+            $usersController->editUserData($userId);
+            break;
         default:
             sendResponse405();
             break;
@@ -45,7 +48,8 @@ if ($requestUri == "/") {
 }
 
 
-function sendResponse405() {
+function sendResponse405()
+{
     http_response_code(405);
     echo json_encode(["message" => "Method Not Allowed"]);
 }

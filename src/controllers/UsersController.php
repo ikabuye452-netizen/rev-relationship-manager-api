@@ -81,4 +81,66 @@ class UsersController {
             ]);
         }
     }
+
+    public function editUserData($userId) : void {
+        try {
+            if (empty($this->user->getUserById($userId))) {
+                http_response_code(404);
+                echo json_encode([
+                    "status"=> "success",
+                    "message"=> "user not found"
+                ]);
+                exit;
+            }
+
+
+            $inputData = json_decode(file_get_contents('php://input'), true);
+
+            if ($inputData === null) {
+                http_response_code(400);
+                echo json_encode([
+                    "status" => "error",
+                    "message"=> "data input is empty"
+                ]);
+                exit;
+            }
+
+            if (!isset($inputData['name']) && !isset($inputData['age']) && !isset($inputData['job'])) {
+                http_response_code(422);
+                echo json_encode([
+                    "status" => "error",
+                    "message"=> "required data missing"
+                ]);
+                exit;
+            }
+
+            if (isset($inputData["name"])) {
+                $this->user->editUserName($userId,$inputData["name"]);
+            }
+
+            if (isset($inputData["age"])) {
+                $this->user->editUserAge($userId, $inputData["age"]);
+            }
+
+            if (isset($inputData["job"])) {
+                $this->user->editUserAge($userId, $inputData["job"]);
+            }
+
+            $result = $this->user->getUserById($userId);
+
+            header('Content-Type: application/json');
+            http_response_code(200);
+            echo json_encode([
+                "status"=>"success",
+                "message"=> "successfully update data",
+                "data"=> $result
+            ]);
+        } catch (Exception $e) {
+            http_response_code(500);
+            echo json_encode([
+                "status"=> "error",
+                "message"=> "server error occured"
+            ]);
+        }
+    }
 }
