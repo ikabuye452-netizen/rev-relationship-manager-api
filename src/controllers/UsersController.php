@@ -13,8 +13,8 @@ class UsersController {
         try {
             $result = $this->user->getAllUser();
     
-            header('Content-Type: application/json');
             http_response_code(200);
+            header('Content-Type: application/json');
             echo json_encode([
                 "status"=>"success",
                 "message"=> "successfully get all user data from database",
@@ -29,14 +29,14 @@ class UsersController {
         }
     }
 
-    public function getUserById($id) : void {
+    public function getUserById($userId) : void {
         try {
-            $result = $this->user->getUserById($id);
+            $result = $this->user->getUserById($userId);
     
             $message = empty($result) ? "User not found" : "Successfully retrieved user data";
 
-            header('Content-Type: application/json');
             http_response_code(empty($result) ? 404 : 200);
+            header('Content-Type: application/json');
             echo json_encode([
                 "status"=>"success",
                 "message"=> $message,
@@ -66,8 +66,8 @@ class UsersController {
                 $message = "Successfully add new user data";
             }
 
-            header('Content-Type: application/json');
             http_response_code(empty($result) ? 400 : 201);
+            header('Content-Type: application/json');
             echo json_encode([
                 "status"=>"success",
                 "message"=> $message,
@@ -128,12 +128,40 @@ class UsersController {
 
             $result = $this->user->getUserById($userId);
 
-            header('Content-Type: application/json');
             http_response_code(200);
+            header('Content-Type: application/json');
             echo json_encode([
                 "status"=>"success",
                 "message"=> "successfully update data",
                 "data"=> $result
+            ]);
+        } catch (Exception $e) {
+            http_response_code(500);
+            echo json_encode([
+                "status"=> "error",
+                "message"=> "server error occured"
+            ]);
+        }
+    }
+
+    public function deleteUserById($userId) : void {
+        try {
+            if (empty($this->user->getUserById($userId))) {
+                http_response_code(404);
+                echo json_encode([
+                    "status"=> "success",
+                    "message"=> "user not found"
+                ]);
+                exit;
+            }
+            
+            $this->user->deleteUserById($userId);
+
+            http_response_code(200);
+            header('Content-Type: application/json');
+            echo json_encode([
+                "status"=>"success",
+                "message"=> "successfully update data"
             ]);
         } catch (Exception $e) {
             http_response_code(500);

@@ -131,4 +131,20 @@ class User {
             error_log("Query failed: " . $e->getMessage(), 3, '../../logs/error.log');
         }
     }
+
+    public function deleteUserById($userId) : void {
+        try {
+            $query = "DELETE FROM user WHERE id = ?";
+
+            if ($this->conn === null) {
+                throw new Exception("Database connection is null.");
+            }
+
+            $stmt = $this->conn->prepare($query);
+            $stmt->bindParam(1, $userId, PDO::PARAM_INT);
+            $stmt->execute();
+        } catch (PDOException $e) {
+            error_log("Query failed: " . $e->getMessage(), 3, '../../logs/error.log');
+        }
+    }
 }

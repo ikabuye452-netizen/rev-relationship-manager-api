@@ -38,6 +38,9 @@ if ($requestUri == "/") {
         case "PATCH":
             $usersController->editUserData($userId);
             break;
+        case "DELETE":
+            $usersController->deleteUserById($userId);
+            break;
         default:
             sendResponse405();
             break;
