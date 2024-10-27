@@ -22,6 +22,9 @@ if ($requestUri == "/") {
         case "GET":
             $usersController->getAllUser();
             break;
+        case "POST":
+            $usersController->addNewUser();
+            break;
         default:
             sendResponse405();
             break;

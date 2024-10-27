@@ -9,7 +9,7 @@ class UsersController {
         $this->user = new User();
     }
 
-    public function getAllUser() {
+    public function getAllUser() : void {
         try {
             $result = $this->user->getAllUser();
     
@@ -29,11 +29,42 @@ class UsersController {
         }
     }
 
-    public function getUserById($id) {
+    public function getUserById($id) : void {
         try {
             $result = $this->user->getUserById($id);
     
             $message = empty($result) ? "User not found" : "Successfully retrieved user data";
+
+            header('Content-Type: application/json');
+            http_response_code(empty($result) ? 404 : 200);
+            echo json_encode([
+                "status"=>"success",
+                "message"=> $message,
+                "data"=> $result
+            ]);
+        } catch (Exception $e) {
+            http_response_code(500);
+            echo json_encode([
+                "status"=> "error",
+                "message"=> "server error occured"
+            ]);
+        }
+    }
+
+    public function addNewUser() : void {
+        try {
+            $name = $_POST['name'];
+            $age = $_POST['age'];
+            $job = $_POST['job'];
+
+            $this->user->addNewUser($name, $age, $job);
+
+            $result = $this->user->getUserByName($name);
+            if (empty($result)) {
+                $message = "Adding new user data failed";
+            } else {
+                $message = "Successfully add new user data";
+            }
 
             header('Content-Type: application/json');
             http_response_code(empty($result) ? 404 : 200);

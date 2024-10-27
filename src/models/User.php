@@ -45,4 +45,39 @@ class User {
             error_log("Query failed: " . $e->getMessage(), 3, '../../logs/error.log');
         }
     }
+
+    public function getUserByName($name) : ?array {
+        try {
+            $query = "SELECT * FROM user WHERE name=:name";
+
+            if ($this->conn === null) {
+                throw new Exception("Database connection is null.");
+            }
+
+            $stmt = $this->conn->prepare($query);
+            $stmt->bindParam(":name", $name, PDO::PARAM_STR);
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            error_log("Query failed: " . $e->getMessage(), 3, '../../logs/error.log');
+        }
+    }
+
+    public function addNewUser($name, $age, $job) : void {
+        try {
+            $query = "INSERT INTO user (name, age, job) VALUES (?, ?, ?)";
+
+            if ($this->conn === null) {
+                throw new Exception("Database connection is null.");
+            }
+
+            $stmt = $this->conn->prepare($query);
+            $stmt->bindParam(1, $name, PDO::PARAM_STR);
+            $stmt->bindParam(2, $age, PDO::PARAM_STR);
+            $stmt->bindParam(3, $job, PDO::PARAM_STR);
+            $stmt->execute();
+        } catch (PDOException $e) {
+            error_log("Query failed: " . $e->getMessage(), 3, '../../logs/error.log');
+        }
+    }
 }
