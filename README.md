@@ -76,6 +76,8 @@ To get started with this project, follow the steps below.
 
 ### Configuration
 
+#### Environment file
+
 Create a **.env** file in the project root directory to store your environment variables. This is essential for configuring database connections and other settings.
 
 Example .env file:
@@ -85,6 +87,24 @@ DB_USER=root
 DB_PASS=my_password
 DB_NAME=db_php_restful_api
 ```
+
+#### Error Log
+
+Create an **error.log** file in the logs directory to store all error logs that occur when the application runs.
+
+```
+(root)
+├───config
+├───logs
+│   └───error.log       # This is new file to log the error
+├───public
+├───src
+│   ├───controllers
+│   ├───models
+│   └───routes
+└───vendor
+```
+
 
 ## Usage
 
@@ -117,6 +137,8 @@ curl -X DELETE http://localhost:8000/api/users/1
 ```
 
 ## Error Handling
+
+### API Response Code
 The API includes custom error handling to manage different scenarios, such as:
 
 - 404 Not Found: When a user is not found.
@@ -124,6 +146,10 @@ The API includes custom error handling to manage different scenarios, such as:
 - 500 Internal Server Error: For unexpected errors during processing.
 
 All responses are returned in JSON format, providing a consistent structure for success and error messages.
+
+### Error Log
+All server errors are logged to a file located at **logs/error.log**. This log file can be used to monitor your web application when it is live in production, helping to identify and troubleshoot issues effectively.
+
 
 ## License
 This project is open-source and available under the MIT License. Feel free to modify and use it as a learning resource.
