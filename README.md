@@ -108,7 +108,13 @@ Create an **error.log** file in the logs directory to store all error logs that 
 
 ## Usage
 
-After setting up the project, you can access the API endpoints using a tool like Postman or cURL. Below are some examples of how to use the endpoints:
+After setting up the project, you can start the web server first. You can use Apache HTTPD, NGINX or PHP built in web server.
+
+```bash
+composer run dev
+```
+
+After that, you can access the API endpoints using a tool like Postman or cURL.Below are some examples of how to use the endpoints:
 
 ### Get All Users
 ```bash
