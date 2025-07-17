@@ -26,6 +26,7 @@ class User {
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
             error_log("Query failed: " . $e->getMessage(), 3, '../../logs/error.log');
+            return null;
         }
     }
 
@@ -43,6 +44,7 @@ class User {
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
             error_log("Query failed: " . $e->getMessage(), 3, '../../logs/error.log');
+            return null;
         }
     }
 
@@ -60,21 +62,22 @@ class User {
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
             error_log("Query failed: " . $e->getMessage(), 3, '../../logs/error.log');
+            return null;
         }
     }
 
     public function addNewUser($name, $age, $job) : void {
         try {
-            $query = "INSERT INTO user (name, age, job) VALUES (?, ?, ?)";
+            $query = "INSERT INTO user (name, age, job) VALUES (:name, :age, :job)";
 
             if ($this->conn === null) {
                 throw new Exception("Database connection is null.");
             }
 
             $stmt = $this->conn->prepare($query);
-            $stmt->bindParam(1, $name, PDO::PARAM_STR);
-            $stmt->bindParam(2, $age, PDO::PARAM_STR);
-            $stmt->bindParam(3, $job, PDO::PARAM_STR);
+            $stmt->bindParam(":name", $name, PDO::PARAM_STR);
+            $stmt->bindParam(":age", $age, PDO::PARAM_STR);
+            $stmt->bindParam(":job", $job, PDO::PARAM_STR);
             $stmt->execute();
         } catch (PDOException $e) {
             error_log("Query failed: " . $e->getMessage(), 3, '../../logs/error.log');
