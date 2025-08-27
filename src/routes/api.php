@@ -12,6 +12,7 @@ if ($requestUri == "/") {
     switch ($requestMethod) {
         case "GET":
             echo "You are in the root!";
+           
             break;
         default:
             sendResponse405();
